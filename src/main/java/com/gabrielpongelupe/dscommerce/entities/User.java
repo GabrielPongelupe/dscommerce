@@ -15,6 +15,8 @@ public class User {
     private Long id;
 
     private String name;
+
+    @Column(unique = true)
     private String email;
     private String phone;
     private LocalDate birthday;
