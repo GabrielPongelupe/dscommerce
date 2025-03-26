@@ -49,6 +49,10 @@ public class ProductService {
         return modelMapper.map(entity, ProductDTO.class); // Retorna o DTO atualizado
     }
 
+    @Transactional
+    public void delete(Long id) {
+        this.productRepository.deleteById(id);
+    }
 
 
 
