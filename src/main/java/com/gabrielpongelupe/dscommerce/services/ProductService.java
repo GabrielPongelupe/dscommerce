@@ -9,9 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.List;
 
 
 @Service
@@ -35,10 +32,23 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductDTO insert(@RequestBody ProductDTO productDTO){
+    public ProductDTO insert(ProductDTO productDTO){
         Product product = productRepository.save(modelMapper.map(productDTO, Product.class));
         return modelMapper.map(product, ProductDTO.class);
     }
+
+    @Transactional
+    public ProductDTO update(Long id, ProductDTO productDTO) {
+        Product entity = productRepository.getReferenceById(id);
+        entity.setName(productDTO.getName());
+        entity.setDescription(productDTO.getDescription());
+        entity.setPrice(productDTO.getPrice());
+        entity.setImgUrl(productDTO.getImgUrl());
+
+        entity = this.productRepository.save(entity);
+        return modelMapper.map(entity, ProductDTO.class); // Retorna o DTO atualizado
+    }
+
 
 
 
